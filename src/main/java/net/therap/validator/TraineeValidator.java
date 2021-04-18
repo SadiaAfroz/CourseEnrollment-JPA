@@ -26,12 +26,12 @@ public class TraineeValidator {
         }
         return true;
     }
-//
-//    public boolean hasTraineeCapacity(int courseId) {
-//        int countTrainees = traineeDao.findAllByCourseId(courseId).size();
-//        if (countTrainees < MAX_TRAINEE_TO_COURSE_ENROLL) {
-//            return true;
-//        }
-//        return false;
-//    }
+
+    public boolean hasTraineeCapacity(int courseId, int numberOfTrainees) {
+        int countTrainees = traineeDao.findAllByCourseId(courseId).size();
+        if ((countTrainees+numberOfTrainees) <= MAX_TRAINEE_TO_COURSE_ENROLL) {
+            return true;
+        }
+        return false;
+    }
 }

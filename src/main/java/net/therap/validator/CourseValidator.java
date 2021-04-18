@@ -29,11 +29,11 @@ public class CourseValidator {
         return true;
     }
 
-//    public boolean hasCourseCapacity(int traineeId) {
-//        int countCourses = courseDao.findAllByTraineeId(traineeId).size();
-//        if (countCourses < MAX_COURSE_TO_TRAINEE_ENROLL) {
-//            return true;
-//        }
-//        return false;
-//    }
+    public boolean hasCourseCapacity(int traineeId, int numberOfCourses) {
+        int countCourses = courseDao.findAllByTraineeId(traineeId).size();
+        if ((countCourses +numberOfCourses)<= MAX_COURSE_TO_TRAINEE_ENROLL) {
+            return true;
+        }
+        return false;
+    }
 }
