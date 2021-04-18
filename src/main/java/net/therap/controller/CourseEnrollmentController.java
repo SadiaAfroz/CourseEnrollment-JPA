@@ -9,6 +9,10 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * @author sadia.afroz
+ * @since 4/12/21
+ */
 public class CourseEnrollmentController {
 
     public void enrollTraineeByCourseId() {
@@ -39,8 +43,7 @@ public class CourseEnrollmentController {
                 }
                 CourseEnrollmentService ces = new CourseEnrollmentService();
                 ces.enrollTrainees(courseId, traineeIds);
-            }
-            else {
+            } else {
                 System.out.println("*************************** Capacity Not Supported **********************");
             }
         } else {

@@ -1,10 +1,13 @@
 package net.therap.validator;
 
 import net.therap.dao.CourseDao;
-import net.therap.model.Course;
 
 import static net.therap.util.Capacity.MAX_COURSE_TO_TRAINEE_ENROLL;
 
+/**
+ * @author sadia.afroz
+ * @since 4/18/21
+ */
 public class CourseValidator {
 
     private CourseDao courseDao;
@@ -31,7 +34,7 @@ public class CourseValidator {
 
     public boolean hasCourseCapacity(int traineeId, int numberOfCourses) {
         int countCourses = courseDao.findAllByTraineeId(traineeId).size();
-        if ((countCourses +numberOfCourses)<= MAX_COURSE_TO_TRAINEE_ENROLL) {
+        if ((countCourses + numberOfCourses) <= MAX_COURSE_TO_TRAINEE_ENROLL) {
             return true;
         }
         return false;

@@ -2,7 +2,6 @@ package net.therap.view;
 
 import net.therap.model.Trainee;
 
-import java.util.List;
 import java.util.Set;
 
 /**

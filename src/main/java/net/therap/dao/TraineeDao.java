@@ -4,7 +4,6 @@ import net.therap.model.Course;
 import net.therap.model.Trainee;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +24,7 @@ public class TraineeDao {
 
     public Set<Trainee> findAllByCourseId(int courseId) {
         Set<Trainee> trainees = new HashSet<>();
-        Course course= (Course) entityManager.find(Course.class, courseId);
+        Course course = (Course) entityManager.find(Course.class, courseId);
         trainees.addAll(course.getTrainees());
         return trainees;
     }
@@ -48,7 +47,7 @@ public class TraineeDao {
     public Set<Trainee> findAll() {
         TypedQuery<Trainee> query = entityManager.createQuery("SELECT t FROM Trainee t", Trainee.class);
         List<Trainee> results = query.getResultList();
-        Set<Trainee> trainees=new HashSet<>(results);
+        Set<Trainee> trainees = new HashSet<>(results);
 
         return trainees;
     }
@@ -90,15 +89,15 @@ public class TraineeDao {
         System.out.println("Trainee Added");
     }
 
-    public void update(Trainee trainee){
+    public void update(Trainee trainee) {
         Trainee t = entityManager.find(Trainee.class, trainee.getId());
 
         if (t != null) {
             entityManager.getTransaction().begin();
-            if(trainee.getName()!=null) {
+            if (trainee.getName() != null) {
                 t.setName(trainee.getName());
             }
-            if(trainee.getEmail()!=null) {
+            if (trainee.getEmail() != null) {
                 t.setEmail(trainee.getEmail());
             }
             entityManager.getTransaction().commit();
@@ -111,7 +110,7 @@ public class TraineeDao {
     }
 
     public void delete(Trainee trainee) {
-        Trainee t= entityManager.find(Trainee.class, trainee.getId());
+        Trainee t = entityManager.find(Trainee.class, trainee.getId());
         if (t != null) {
             entityManager.getTransaction().begin();
             entityManager.remove(t);

@@ -8,6 +8,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.Set;
 
+/**
+ * @author sadia.afroz
+ * @since 4/18/21
+ */
 public class CourseEnrollmentDao {
     EntityManagerFactory entityManagerFactory;
     EntityManager entityManager;

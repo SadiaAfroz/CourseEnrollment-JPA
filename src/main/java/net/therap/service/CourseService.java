@@ -4,7 +4,6 @@ import net.therap.dao.CourseDao;
 import net.therap.model.Course;
 import net.therap.view.CoursesView;
 
-import java.util.List;
 import java.util.Set;
 
 /**

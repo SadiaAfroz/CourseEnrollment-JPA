@@ -1,11 +1,13 @@
 package net.therap.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+/**
+ * @author sadia.afroz
+ * @since 4/18/21
+ */
 @Entity
 @Table(name = "TRAINEE")
 public class Trainee {
@@ -17,23 +19,23 @@ public class Trainee {
     String email;
 
     @ManyToMany(mappedBy = "trainees")
-    Set<Course> courses ;
+    Set<Course> courses;
 
-    public Trainee(){
-        this.courses=new HashSet<>();
+    public Trainee() {
+        this.courses = new HashSet<>();
     }
 
     public Trainee(int id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.courses=new HashSet<>();
+        this.courses = new HashSet<>();
     }
 
     public Trainee(String name, String email) {
         this.name = name;
         this.email = email;
-        this.courses=new HashSet<>();
+        this.courses = new HashSet<>();
     }
 
     public int getId() {
@@ -68,16 +70,16 @@ public class Trainee {
         this.courses = courses;
     }
 
-    public void addCourse(Course course){
-        boolean added= courses.add(course);
-        if(added){
+    public void addCourse(Course course) {
+        boolean added = courses.add(course);
+        if (added) {
             course.getTrainees().add(this);
         }
     }
 
-    public void removeCourse(Course course){
-        boolean removed= courses.remove(course);
-        if(removed){
+    public void removeCourse(Course course) {
+        boolean removed = courses.remove(course);
+        if (removed) {
             course.getTrainees().remove(this);
         }
     }

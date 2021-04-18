@@ -4,6 +4,10 @@ import net.therap.dao.TraineeDao;
 
 import static net.therap.util.Capacity.MAX_TRAINEE_TO_COURSE_ENROLL;
 
+/**
+ * @author sadia.afroz
+ * @since 4/18/21
+ */
 public class TraineeValidator {
     private TraineeDao traineeDao;
 
@@ -29,7 +33,7 @@ public class TraineeValidator {
 
     public boolean hasTraineeCapacity(int courseId, int numberOfTrainees) {
         int countTrainees = traineeDao.findAllByCourseId(courseId).size();
-        if ((countTrainees+numberOfTrainees) <= MAX_TRAINEE_TO_COURSE_ENROLL) {
+        if ((countTrainees + numberOfTrainees) <= MAX_TRAINEE_TO_COURSE_ENROLL) {
             return true;
         }
         return false;

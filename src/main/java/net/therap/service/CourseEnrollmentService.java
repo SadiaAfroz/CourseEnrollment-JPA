@@ -4,6 +4,10 @@ import net.therap.dao.CourseEnrollmentDao;
 
 import java.util.Set;
 
+/**
+ * @author sadia.afroz
+ * @since 4/18/21
+ */
 public class CourseEnrollmentService {
 
     public void enrollTrainees(int courseId, Set<Integer> traineeIds) {

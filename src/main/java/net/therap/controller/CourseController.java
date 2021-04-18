@@ -1,12 +1,10 @@
 package net.therap.controller;
 
 import net.therap.model.Course;
-import net.therap.model.Trainee;
 import net.therap.service.CourseService;
 import net.therap.validator.CourseValidator;
 import net.therap.validator.TraineeValidator;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -15,16 +13,6 @@ import java.util.Set;
  * @since 3/31/21
  */
 public class CourseController {
-
-//    public void getCourseById() {
-//        Scanner input = new Scanner(System.in);
-//        System.out.println("Enter Course Id: ");
-//        int courseId = input.nextInt();
-//
-//        CourseService courseProcessor = new CourseService();
-//        Course course = courseProcessor.getCourse(courseId);
-//        courseProcessor.processCourse(course);
-//    }
 
     public void getCoursesByTraineeId() {
         Scanner input = new Scanner(System.in);
@@ -35,13 +23,12 @@ public class CourseController {
             CourseService courseProcessor = new CourseService();
             Set<Course> courses = courseProcessor.getCourses(traineeId);
             courseProcessor.processCourses(courses);
-        }
-        else {
+        } else {
             System.out.println("\n************************** Invalid Trainee Id *************************");
         }
     }
 
-    public void getAllCourses(){
+    public void getAllCourses() {
         CourseService courseProcessor = new CourseService();
         Set<Course> courses = courseProcessor.getAll();
         courseProcessor.processCourses(courses);

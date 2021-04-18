@@ -4,7 +4,6 @@ import net.therap.model.Course;
 import net.therap.model.Trainee;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +46,7 @@ public class CourseDao {
     public Set<Course> findAll() {
         TypedQuery<Course> query = entityManager.createQuery("SELECT c FROM Course c", Course.class);
         List<Course> results = query.getResultList();
-        Set<Course> courses=new HashSet<>(results);
+        Set<Course> courses = new HashSet<>(results);
 
         return courses;
     }
