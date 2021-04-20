@@ -4,6 +4,7 @@ import net.therap.dao.TraineeDao;
 import net.therap.model.Trainee;
 import net.therap.view.TraineesView;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,31 +18,30 @@ public class TraineeService {
         traineesView.view(trainees);
     }
 
-    public Set<Trainee> getTrainees(int courseId) {
+    public Set<Trainee> findAllByCourseId(int courseId) {
         TraineeDao traineeDao = new TraineeDao();
         Set<Trainee> trainees = traineeDao.findAllByCourseId(courseId);
-
         return trainees;
     }
 
-    public Set<Trainee> getAll() {
+    public Set<Trainee> findAll() {
         TraineeDao traineeDao = new TraineeDao();
-        Set<Trainee> trainees = traineeDao.findAll();
+        Set<Trainee> trainees = new HashSet<>(traineeDao.findAll());
         return trainees;
     }
 
-    public void insertTrainee(Trainee trainee) {
+    public void save(Trainee trainee) {
         TraineeDao traineeDao = new TraineeDao();
-        traineeDao.insert(trainee);
+        traineeDao.save(trainee);
     }
 
-    public void updateTrainee(Trainee trainee) {
+    public void saveOrUpdate(Trainee trainee) {
         TraineeDao traineeDao = new TraineeDao();
-        traineeDao.update(trainee);
+        traineeDao.saveOrUpdate(trainee);
     }
 
-    public void deleteTrainee(Trainee trainee) {
+    public void remove(Trainee trainee) {
         TraineeDao traineeDao = new TraineeDao();
-        traineeDao.delete(trainee);
+        traineeDao.remove(trainee);
     }
 }

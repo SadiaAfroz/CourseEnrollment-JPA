@@ -12,5 +12,4 @@ public class EnrollmentValidator {
     public EnrollmentValidator() {
         this.courseEnrollmentDao = new CourseEnrollmentDao();
     }
-
 }

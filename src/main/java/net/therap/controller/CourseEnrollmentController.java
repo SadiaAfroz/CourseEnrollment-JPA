@@ -51,42 +51,6 @@ public class CourseEnrollmentController {
         }
     }
 
-    public void enrollCourseByTraineeId() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter Trainee Id: ");
-        int traineeId = input.nextInt();
-
-        TraineeValidator tv = new TraineeValidator();
-        if (tv.isValidId(traineeId)) {
-            System.out.println("How many Course Id's you will add ? ");
-            int numberOfCourses = input.nextInt();
-
-            CourseValidator courseValidator = new CourseValidator();
-            if (courseValidator.hasCourseCapacity(traineeId, numberOfCourses)) {
-                System.out.println("Enter Course ids:");
-                Set<Integer> courseIds = new HashSet<>();
-                int cnt = 0;
-                while (cnt < numberOfCourses) {
-                    int courseId = input.nextInt();
-                    CourseValidator cv = new CourseValidator();
-                    if (cv.isValidId(courseId)) {
-                        courseIds.add(courseId);
-                    } else {
-                        System.out.println("\n************************* Invalid Course Id ********************");
-                    }
-                    System.out.println("Enter Next Course id : ");
-                    cnt++;
-                }
-                CourseEnrollmentService ces = new CourseEnrollmentService();
-                ces.enrollCourses(traineeId, courseIds);
-            } else {
-                System.out.println("*************************** Capacity Not Supported **********************");
-            }
-        } else {
-            System.out.println("\n************************* Invalid Trainee Id ********************");
-        }
-    }
-
     public void removeTraineeByCourseId() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter Course Id: ");
@@ -102,7 +66,6 @@ public class CourseEnrollmentController {
                 //remove
                 CourseEnrollmentService ces = new CourseEnrollmentService();
                 ces.removeTrainee(courseId, traineeId);
-
             } else {
                 System.out.println("\n************************* Invalid Trainee Id ***************************");
             }

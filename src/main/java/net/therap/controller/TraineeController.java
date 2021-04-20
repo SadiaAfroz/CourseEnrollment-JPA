@@ -21,22 +21,21 @@ public class TraineeController {
 
         CourseValidator cv = new CourseValidator();
         if (cv.isValidId(courseId)) {
-            TraineeService traineeProcessor = new TraineeService();
-            Set<Trainee> trainees = traineeProcessor.getTrainees(courseId);
-            traineeProcessor.processTrainees(trainees);
+            TraineeService traineeService = new TraineeService();
+            Set<Trainee> trainees = traineeService.findAllByCourseId(courseId);
+            traineeService.processTrainees(trainees);
         } else {
             System.out.println("\n************************** Invalid Course Id *************************");
         }
     }
 
     public void getAllTrainees() {
-        TraineeService traineeProcessor = new TraineeService();
-        Set<Trainee> trainees = traineeProcessor.getAll();
-        traineeProcessor.processTrainees(trainees);
+        TraineeService traineeService = new TraineeService();
+        Set<Trainee> trainees = traineeService.findAll();
+        traineeService.processTrainees(trainees);
     }
 
-
-    public void insertTrainee() {
+    public void processSave() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter Trainee Name: ");
         String traineeName = input.nextLine();
@@ -49,13 +48,13 @@ public class TraineeController {
             trainee.setEmail(traineeEmail);
 
             TraineeService traineeService = new TraineeService();
-            traineeService.insertTrainee(trainee);
+            traineeService.save(trainee);
         } else {
             System.out.println("Not a valid Trainee Name ");
         }
     }
 
-    public void updateTraineeName() {
+    public void processUpdateTraineeName() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter new Trainee Name: ");
         String newName = input.nextLine();
@@ -66,10 +65,10 @@ public class TraineeController {
         Trainee trainee = new Trainee();
         trainee.setId(traineeId);
         trainee.setName(newName);
-        traineeService.updateTrainee(trainee);
+        traineeService.saveOrUpdate(trainee);
     }
 
-    public void updateTraineeEmail() {
+    public void processUpdateTraineeEmail() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter new Trainee Email: ");
         String newEmail = input.nextLine();
@@ -80,10 +79,10 @@ public class TraineeController {
         Trainee trainee = new Trainee();
         trainee.setId(traineeId);
         trainee.setEmail(newEmail);
-        traineeService.updateTrainee(trainee);
+        traineeService.saveOrUpdate(trainee);
     }
 
-    public void deleteTrainee() {
+    public void processRemove() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter Trainee id: ");
         int traineeId = input.nextInt();
@@ -91,6 +90,6 @@ public class TraineeController {
         TraineeService traineeService = new TraineeService();
         Trainee trainee = new Trainee();
         trainee.setId(traineeId);
-        traineeService.deleteTrainee(trainee);
+        traineeService.remove(trainee);
     }
 }

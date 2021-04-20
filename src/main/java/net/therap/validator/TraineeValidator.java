@@ -16,7 +16,7 @@ public class TraineeValidator {
     }
 
     public boolean isValidName(String traineeName) {
-        int count = traineeDao.checkNameExist(traineeName);
+        int count = traineeDao.isNameExists(traineeName);
         if (count == 0) {
             return true;
         }
@@ -24,7 +24,7 @@ public class TraineeValidator {
     }
 
     public boolean isValidId(int id) {
-        int count = traineeDao.checkIdExist(id);
+        int count = traineeDao.isIdExists(id);
         if (count == 0) {
             return false;
         }

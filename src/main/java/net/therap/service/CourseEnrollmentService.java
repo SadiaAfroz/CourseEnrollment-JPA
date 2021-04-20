@@ -12,12 +12,7 @@ public class CourseEnrollmentService {
 
     public void enrollTrainees(int courseId, Set<Integer> traineeIds) {
         CourseEnrollmentDao ced = new CourseEnrollmentDao();
-        ced.addTrainees(courseId, traineeIds);
-    }
-
-    public void enrollCourses(int traineeId, Set<Integer> courseIds) {
-        CourseEnrollmentDao ced = new CourseEnrollmentDao();
-        ced.addCourses(traineeId, courseIds);
+        ced.addTraineeList(courseId, traineeIds);
     }
 
     public void removeTrainee(int courseId, int traineeId) {

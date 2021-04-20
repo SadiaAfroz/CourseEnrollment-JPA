@@ -4,6 +4,7 @@ import net.therap.dao.CourseDao;
 import net.therap.model.Course;
 import net.therap.view.CoursesView;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,41 +13,42 @@ import java.util.Set;
  */
 public class CourseService {
 
+    // processing of viewing single Course
     public void processCourse(Course course) {
         System.out.println(course.toString());
     }
 
+    // processing of viewing list of Courses
     public void processCourses(Set<Course> courses) {
         CoursesView coursesView = new CoursesView();
         coursesView.view(courses);
-
     }
 
-    public Set<Course> getAll() {
+    public Set<Course> findAll() {
         CourseDao courseDao = new CourseDao();
-        Set<Course> courses = courseDao.findAll();
+        Set<Course> courses = new HashSet<>(courseDao.findAll());
         return courses;
     }
 
-    public Set<Course> getCourses(int traineeId) {
+    public Set<Course> findAllByTraineeId(int traineeId) {
         CourseDao courseDao = new CourseDao();
         Set<Course> courses = courseDao.findAllByTraineeId(traineeId);
 
         return courses;
     }
 
-    public void insertCourse(Course course) {
+    public void save(Course course) {
         CourseDao courseDao = new CourseDao();
-        courseDao.insert(course);
+        courseDao.save(course);
     }
 
-    public void updateCourse(Course course) {
+    public void saveOrUpdate(Course course) {
         CourseDao courseDao = new CourseDao();
-        courseDao.update(course);
+        courseDao.saveOrUpdate(course);
     }
 
-    public void deleteCourse(Course course) {
+    public void remove(Course course) {
         CourseDao courseDao = new CourseDao();
-        courseDao.delete(course);
+        courseDao.remove(course);
     }
 }

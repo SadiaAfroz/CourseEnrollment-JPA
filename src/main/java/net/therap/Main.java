@@ -29,21 +29,16 @@ public class Main {
                     break;
                 case ADD_NEW_COURSE:
                     CourseController courseAdd = new CourseController();
-                    courseAdd.insertCourse();
+                    courseAdd.processSave();
                     break;
                 case ADD_NEW_TRAINEE:
                     TraineeController traineeAdd = new TraineeController();
-                    traineeAdd.insertTrainee();
+                    traineeAdd.processSave();
                     break;
                 case ENROLL_NEW_TRAINEES:
                     System.out.println("ENROLL_NEW_TRAINEES");
                     CourseEnrollmentController enrollTrainees = new CourseEnrollmentController();
                     enrollTrainees.enrollTraineeByCourseId();
-                    break;
-                case ENROLL_NEW_COURSES:
-                    System.out.println("ENROLL_NEW_COURSES");
-                    CourseEnrollmentController enrollCourses = new CourseEnrollmentController();
-                    enrollCourses.enrollCourseByTraineeId();
                     break;
                 case REMOVE_TRAINEE_FROM_COURSE:
                     System.out.println("REMOVE_TRAINEE_FROM_COURSE");
@@ -53,27 +48,27 @@ public class Main {
                 case UPDATE_TRAINEE_EMAIL:
                     System.out.println("UPDATE_TRAINEE_EMAIL");
                     TraineeController traineeUpdate1 = new TraineeController();
-                    traineeUpdate1.updateTraineeEmail();
+                    traineeUpdate1.processUpdateTraineeEmail();
                     break;
                 case UPDATE_TRAINEE_NAME:
                     System.out.println("UPDATE_TRAINEE_NAME");
                     TraineeController traineeUpdate2 = new TraineeController();
-                    traineeUpdate2.updateTraineeName();
+                    traineeUpdate2.processUpdateTraineeName();
                     break;
                 case UPDATE_COURSE_TITLE:
                     System.out.println("UPDATE_COURSE_TITLE");
                     CourseController courseUpdate = new CourseController();
-                    courseUpdate.updateCourse();
+                    courseUpdate.processUpdate();
                     break;
                 case DELETE_TRAINEE:
                     System.out.println("DELETE_TRAINEE");
                     TraineeController traineeDelete = new TraineeController();
-                    traineeDelete.deleteTrainee();
+                    traineeDelete.processRemove();
                     break;
                 case DELETE_COURSE:
                     System.out.println("DELETE_COURSE");
                     CourseController courseDelete = new CourseController();
-                    courseDelete.deleteCourse();
+                    courseDelete.processRemove();
                     break;
                 case GET_ALL_COURSES:
                     System.out.println("GET_ALL_COURSES");
@@ -82,7 +77,7 @@ public class Main {
                     break;
                 case GET_ALL_TRAINEES:
                     System.out.println("GET_ALL_TRAINEES");
-                    TraineeController allTrainees=new TraineeController();
+                    TraineeController allTrainees = new TraineeController();
                     allTrainees.getAllTrainees();
                     break;
                 case EXIT:

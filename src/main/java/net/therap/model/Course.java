@@ -1,6 +1,7 @@
 package net.therap.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,23 +10,17 @@ import java.util.Set;
  * @since 4/18/21
  */
 @Entity
-@Table(name = "COURSE")
-public class Course {
+@Table(name = "course")
+public class Course implements Serializable {
 
+    private static final long serialVersionUID = -1123934568152549436L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
+    @SequenceGenerator(name = "course_generator", sequenceName = "course_seq", initialValue = 1, allocationSize = 1)
     private int id;
     private String title;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(
-            name = "ENROLLMENT_PAIR",
-            joinColumns = @JoinColumn(name = "courseId"),
-            inverseJoinColumns = @JoinColumn(name = "traineeId")
-    )
+    @ManyToMany(mappedBy = "courses")
     Set<Trainee> trainees;
 
     public Course() {

@@ -13,6 +13,7 @@ import java.util.Set;
  * @since 4/18/21
  */
 public class CourseEnrollmentDao {
+
     EntityManagerFactory entityManagerFactory;
     EntityManager entityManager;
 
@@ -21,30 +22,17 @@ public class CourseEnrollmentDao {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public void addTrainees(int courseId, Set<Integer> traineeIds) {
+    public void addTraineeList(int courseId, Set<Integer> traineeIds) {
 
         Course c = (Course) entityManager.find(Course.class, courseId);
 
         for (int tId : traineeIds) {
             Trainee t = (Trainee) entityManager.find(Trainee.class, tId);
-            entityManager.getTransaction().begin();
             c.addTrainee(t);
-            entityManager.getTransaction().commit();
         }
-        entityManager.close();
-        entityManagerFactory.close();
-    }
-
-    public void addCourses(int traineeId, Set<Integer> courseIds) {
-
-        Trainee t = (Trainee) entityManager.find(Trainee.class, traineeId);
-
-        for (int cId : courseIds) {
-            Course c = (Course) entityManager.find(Course.class, cId);
-            entityManager.getTransaction().begin();
-            t.addCourse(c);
-            entityManager.getTransaction().commit();
-        }
+        entityManager.getTransaction().begin();
+        entityManager.merge(c);
+        entityManager.getTransaction().commit();
         entityManager.close();
         entityManagerFactory.close();
     }

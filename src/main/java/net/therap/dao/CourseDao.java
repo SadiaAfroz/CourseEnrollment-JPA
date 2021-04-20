@@ -4,7 +4,6 @@ import net.therap.model.Course;
 import net.therap.model.Trainee;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,13 +22,8 @@ public class CourseDao {
     }
 
     public Course findById(int courseId) {
-        String sql = "SELECT title FROM Course WHERE id=:courseId";
-        Course course = new Course();
-        Query query = entityManager.createQuery(sql);
-
-        String courseTitle = ((String) query.setParameter("courseId", courseId).getSingleResult());
-        course.setId(courseId);
-        course.setTitle(courseTitle);
+        TypedQuery<Course> query = entityManager.createQuery("SELECT c FROM Course c WHERE c.id=:courseId", Course.class);
+        Course course = query.setParameter("courseId", courseId).getSingleResult();
 
         entityManager.close();
         entityManagerFactory.close();
@@ -37,22 +31,17 @@ public class CourseDao {
     }
 
     public Set<Course> findAllByTraineeId(int traineeId) {
-        Set<Course> courses = new HashSet<>();
         Trainee trainee = (Trainee) entityManager.find(Trainee.class, traineeId);
-        courses.addAll(trainee.getCourses());
-        return courses;
+        return trainee.getCourses();
     }
 
-    public Set<Course> findAll() {
+    public List<Course> findAll() {
         TypedQuery<Course> query = entityManager.createQuery("SELECT c FROM Course c", Course.class);
-        List<Course> results = query.getResultList();
-        Set<Course> courses = new HashSet<>(results);
-
-        return courses;
+        return query.getResultList();
     }
 
-    public int checkNameExist(String courseTitle) {
-        String sql = "SELECT COUNT(*) as count FROM Course WHERE title = :title";
+    public int isTitleExists(String courseTitle) {
+        String sql = "SELECT COUNT(id) as count FROM Course WHERE title = :title";
         Query query = entityManager.createQuery(sql);
 
         int count = ((Long) query.setParameter("title", courseTitle).getSingleResult()).intValue();
@@ -63,9 +52,8 @@ public class CourseDao {
         return count;
     }
 
-
-    public int checkIdExist(int id) {
-        String sql = "SELECT COUNT(*) as count FROM Course WHERE id = :id";
+    public int isIdExists(int id) {
+        String sql = "SELECT COUNT(id) as count FROM Course WHERE id = :id";
         Query query = entityManager.createQuery(sql);
 
         int count = ((Long) query.setParameter("id", id).getSingleResult()).intValue();
@@ -76,8 +64,7 @@ public class CourseDao {
         return count;
     }
 
-    public void insert(Course course) {
-
+    public void save(Course course) {
         entityManager.getTransaction().begin();
         entityManager.persist(course);
         entityManager.getTransaction().commit();
@@ -86,27 +73,19 @@ public class CourseDao {
         entityManagerFactory.close();
 
         System.out.println("Course Added");
-
     }
 
-    public void update(Course course) {
+    public void saveOrUpdate(Course course) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(course);
+        entityManager.getTransaction().commit();
+        System.out.println("Course Updated");
 
-        Course c = entityManager.find(Course.class, course.getId());
-
-        if (c != null) {
-            entityManager.getTransaction().begin();
-            c.setTitle(course.getTitle());
-            entityManager.getTransaction().commit();
-            System.out.println("Course Updated");
-        } else {
-            System.out.println("Invalid Course Id");
-        }
         entityManager.close();
         entityManagerFactory.close();
-
     }
 
-    public void delete(Course course) {
+    public void remove(Course course) {
         Course c = entityManager.find(Course.class, course.getId());
         if (c != null) {
             entityManager.getTransaction().begin();

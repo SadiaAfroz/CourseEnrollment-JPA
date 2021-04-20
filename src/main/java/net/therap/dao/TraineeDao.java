@@ -4,7 +4,6 @@ import net.therap.model.Course;
 import net.therap.model.Trainee;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,37 +22,26 @@ public class TraineeDao {
     }
 
     public Set<Trainee> findAllByCourseId(int courseId) {
-        Set<Trainee> trainees = new HashSet<>();
         Course course = (Course) entityManager.find(Course.class, courseId);
-        trainees.addAll(course.getTrainees());
-        return trainees;
+        return course.getTrainees();
     }
 
-    public int findByName(String name) {
-        String sql = "SELECT id from Trainee WHERE name=:name";
-        int traineeId = -1;
-
-        Query query = entityManager.createQuery(sql);
-
-        traineeId = ((Long) query.setParameter("name", name).getSingleResult()).intValue();
+    public Trainee findByName(String name) {
+        TypedQuery<Trainee> query = entityManager.createQuery("SELECT t FROM Trainee t WHERE t.name=:name", Trainee.class);
+        Trainee trainee = query.setParameter("name", name).getSingleResult();
 
         entityManager.close();
         entityManagerFactory.close();
-
-        return traineeId;
+        return trainee;
     }
 
-
-    public Set<Trainee> findAll() {
+    public List<Trainee> findAll() {
         TypedQuery<Trainee> query = entityManager.createQuery("SELECT t FROM Trainee t", Trainee.class);
-        List<Trainee> results = query.getResultList();
-        Set<Trainee> trainees = new HashSet<>(results);
-
-        return trainees;
+        return query.getResultList();
     }
 
-    public int checkNameExist(String name) {
-        String sql = "SELECT COUNT(*) as count FROM Trainee WHERE name=:name";
+    public int isNameExists(String name) {
+        String sql = "SELECT COUNT(id) as count FROM Trainee WHERE name=:name";
         int count = 0;
         Query query = entityManager.createQuery(sql);
 
@@ -61,12 +49,11 @@ public class TraineeDao {
 
         entityManager.close();
         entityManagerFactory.close();
-
         return count;
     }
 
-    public int checkIdExist(int id) {
-        String sql = "SELECT COUNT(*) as count FROM Trainee WHERE id=:id";
+    public int isIdExists(int id) {
+        String sql = "SELECT COUNT(id) as count FROM Trainee WHERE id=:id";
         int count = 0;
         Query query = entityManager.createQuery(sql);
 
@@ -74,11 +61,10 @@ public class TraineeDao {
 
         entityManager.close();
         entityManagerFactory.close();
-
         return count;
     }
 
-    public void insert(Trainee trainee) {
+    public void save(Trainee trainee) {
         entityManager.getTransaction().begin();
         entityManager.persist(trainee);
         entityManager.getTransaction().commit();
@@ -89,27 +75,25 @@ public class TraineeDao {
         System.out.println("Trainee Added");
     }
 
-    public void update(Trainee trainee) {
+    public void saveOrUpdate(Trainee trainee) {
         Trainee t = entityManager.find(Trainee.class, trainee.getId());
-
-        if (t != null) {
-            entityManager.getTransaction().begin();
-            if (trainee.getName() != null) {
-                t.setName(trainee.getName());
-            }
-            if (trainee.getEmail() != null) {
-                t.setEmail(trainee.getEmail());
-            }
-            entityManager.getTransaction().commit();
-            System.out.println("Trainee Name Updated");
-        } else {
-            System.out.println("Invalid Trainee Id");
+        if (trainee.getName() != null) {
+            t.setName(trainee.getName());
         }
+        if (trainee.getEmail() != null) {
+            t.setEmail(trainee.getEmail());
+        }
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(t);
+        entityManager.getTransaction().commit();
+
+        System.out.println("Trainee Name/Email Updated");
         entityManager.close();
         entityManagerFactory.close();
     }
 
-    public void delete(Trainee trainee) {
+    public void remove(Trainee trainee) {
         Trainee t = entityManager.find(Trainee.class, trainee.getId());
         if (t != null) {
             entityManager.getTransaction().begin();

@@ -17,7 +17,7 @@ public class CourseValidator {
     }
 
     public boolean isValidName(String courseName) {
-        int count = courseDao.checkNameExist(courseName);
+        int count = courseDao.isTitleExists(courseName);
         if (count == 0) {
             return true;
         }
@@ -25,7 +25,7 @@ public class CourseValidator {
     }
 
     public boolean isValidId(int id) {
-        int count = courseDao.checkIdExist(id);
+        int count = courseDao.isIdExists(id);
         if (count == 0) {
             return false;
         }

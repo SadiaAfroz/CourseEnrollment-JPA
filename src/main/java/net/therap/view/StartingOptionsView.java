@@ -14,7 +14,6 @@ public class StartingOptionsView {
         System.out.println("3. Add new course (course name)");
         System.out.println("4. Add new trainee (trainee name)");
         System.out.println("5. Enroll new Trainees(course id, trainee ids)");
-        System.out.println("6. Enroll new Courses(trainee id, course ids)");
         System.out.println("7. Remove trainee from course (course id, trainee id)");
         System.out.println("8. Update trainee email (trainee new email, trainee id)");
         System.out.println("9. Update trainee name (trainee new name, trainee id)");
