@@ -1,5 +1,7 @@
 package net.therap.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,10 +15,10 @@ import java.util.Set;
 @Table(name = "course")
 public class Course implements Serializable {
 
-    private static final long serialVersionUID = -1123934568152549436L;
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
-    @SequenceGenerator(name = "course_generator", sequenceName = "course_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
 
@@ -67,6 +69,12 @@ public class Course implements Serializable {
     public void removeTrainee(Trainee trainee) {
         boolean removed = trainees.remove(trainee);
         if (removed) {
+            trainee.getCourses().remove(this);
+        }
+    }
+
+    public void removeCourseFromTrainees(){
+        for(Trainee trainee: this.trainees){
             trainee.getCourses().remove(this);
         }
     }

@@ -89,6 +89,7 @@ public class CourseDao {
         Course c = entityManager.find(Course.class, course.getId());
         if (c != null) {
             entityManager.getTransaction().begin();
+            c.removeCourseFromTrainees();
             entityManager.remove(c);
             entityManager.getTransaction().commit();
             System.out.println("Course Deleted");

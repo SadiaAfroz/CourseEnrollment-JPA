@@ -1,5 +1,7 @@
 package net.therap.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,10 +15,10 @@ import java.util.Set;
 @Table(name = "trainee")
 public class Trainee implements Serializable {
 
-    private static final long serialVersionUID = 1624218518557150199L;
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trainee_generator")
-    @SequenceGenerator(name = "trainee_generator", sequenceName = "trainee_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String name;
     String email;
